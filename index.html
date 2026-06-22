@@ -146,7 +146,6 @@
         .sprite-head {
             width: 16px; height: 16px; background-color: #f1c27d; position: absolute; top: 0px; left: 8px;
             border-radius: 6px 6px 4px 4px; 
-            /* Cabelo preto raspado escuro */
             box-shadow: inset 0 5px 0 #111; 
         }
         .sprite-glasses {
@@ -230,7 +229,6 @@
         .poi { position: absolute; display: flex; justify-content: center; align-items: flex-end; z-index: 40; }
         .poi-sprite { font-size: 52px; line-height: 52px; filter: drop-shadow(0px 6px 0px rgba(0,0,0,0.4)); }
         
-        /* ANIMAÇÃO E POSICIONAMENTO NOS TÍTULOS E ETIQUETAS */
         .poi-label {
             position: absolute; 
             bottom: 60px; 
@@ -332,37 +330,30 @@
         }
 
         /* =========================================
-           ESTILOS DO MINIJOGO TERMOO
+           ESTILOS DO FILTRO DO TERMOO (ESTILO MINIJOGOS)
         ========================================= */
-        .termoo-container {
-            display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 15px;
-        }
-        .termoo-grid {
-            display: flex; flex-direction: column; gap: 5px;
-        }
-        .termoo-row {
-            display: flex; gap: 5px; justify-content: center;
-        }
+        .termoo-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 10px; }
+        .termoo-grid { display: grid; grid-template-rows: repeat(6, 1fr); gap: 5px; }
+        .termoo-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .termoo-cell {
-            width: 40px; height: 40px; border: 3px solid white; background: rgba(0,0,0,0.5);
-            font-family: var(--font-title); font-size: 12px; color: white; text-align: center;
-            line-height: 34px; text-transform: uppercase;
+            width: 45px; height: 45px; border: 3px solid #555; background: #111;
+            display: flex; justify-content: center; align-items: center;
+            font-family: var(--font-title); font-size: 16px; color: white; text-transform: uppercase;
         }
-        .termoo-cell.correct { background-color: var(--text-green); border-color: #27ae60; }
-        .termoo-cell.present { background-color: var(--text-gold); border-color: #d35400; color: black; }
-        .termoo-cell.absent { background-color: #555; border-color: #333; }
+        .termoo-cell.correct { background-color: var(--text-green); border-color: #fff; }
+        .termoo-cell.present { background-color: var(--text-gold); border-color: #fff; }
+        .termoo-cell.absent { background-color: #333; border-color: #555; }
         
-        .termoo-input-area {
-            display: flex; gap: 10px; margin-top: 10px; width: 100%; max-width: 300px;
+        .termoo-keyboard { display: flex; flex-direction: column; gap: 5px; align-items: center; width: 100%; max-width: 400px; margin-top: 10px; }
+        .termoo-kb-row { display: flex; gap: 4px; justify-content: center; width: 100%; }
+        .termoo-key {
+            padding: 10px 6px; min-width: 28px; background: #333; border: 2px solid #555;
+            color: white; font-family: var(--font-body); font-size: 18px; cursor: pointer; text-align: center;
         }
-        .termoo-input {
-            flex-grow: 1; background: black; border: 2px solid white; color: var(--text-gold);
-            font-family: var(--font-body); font-size: 20px; text-align: center; padding: 5px; text-transform: uppercase;
-        }
-        .termoo-btn {
-            background: var(--text-gold); border: 2px solid white; color: black;
-            font-family: var(--font-title); font-size: 10px; padding: 5px 15px; cursor: pointer;
-        }
+        .termoo-key:active { background: #555; }
+        .termoo-key.key-correct { background-color: var(--text-green) !important; }
+        .termoo-key.key-present { background-color: var(--text-gold) !important; }
+        .termoo-key.key-absent { background-color: #111 !important; color: #555; }
 
         /* =========================================
            CONTROLES MOBILE E DICAS
@@ -827,114 +818,142 @@
                 `
             },
             epilogue: {
-                title: "DESAFIO DO CASTELO FINAL",
+                title: "EPÍLOGO - GAME CLEARED",
                 popup: "O Castelo Final exige uma senha mágica para abrir! [AÇÃO]",
-                html: `
-                    <p style="text-align:center; font-size:18px;">Decifre a palavra secreta de 4 letras para desbloquear o Epílogo!</p>
-                    <div class="termoo-container">
-                        <div class="termoo-grid" id="termoo-board"></div>
-                        <div class="termoo-input-area" id="termoo-controls">
-                            <input type="text" id="termoo-input" class="termoo-input" maxlength="4" placeholder="SENHA">
-                            <button class="termoo-btn" onclick="submitTermooWord()">ENVIAR</button>
-                        </div>
-                        <p id="termoo-feedback" style="font-size:16px; color:var(--text-gold); margin-top:5px; text-align:center;"></p>
-                    </div>
-                `
+                isTermoo: true
             }
         };
+
+        const epilogueRealContent = `
+            <div style="display:flex; justify-content:center; margin-bottom: 20px;">
+                <div class="polaroid-card" style="width: 220px;">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400&auto=format&fit=crop" alt="Foto do Casal">
+                    <p>Eu & Você ❤️</p>
+                </div>
+            </div>
+            <p style="font-size:18px;">Nenhum jogo seria tão bom se não tivesse você como protagonista.</p>
+            <p style="font-size:18px;">Ver você evoluir, passar de level a cada ano e enfrentar os desafios de cabeça erguida é o meu maior orgulho.</p>
+            <p style="font-size:18px;">Que esse novo nível que você desbloqueia hoje traga missões incríveis e muito loot legendário.</p>
+            <p style="color:var(--text-gold); text-align:center; margin-top:20px;">Serei para sempre a sua Player 2.<br>Feliz Aniversário!</p>`;
 
         /* =========================================
            SISTEMA LOGICIAL DO MINIJOGO TERMOO (PALAVRA: VIDA)
         ========================================= */
-        const secretWord = "VIDA";
-        let attemptsCount = 0;
-        const totalMaxAttempts = 5;
+        const targetWord = "VIDA";
+        let termooRow = 0;
+        let termooCol = 0;
+        let termooOver = false;
         let isTermooCleared = false;
 
-        function initializeTermooGrid() {
-            const board = document.getElementById('termoo-board');
-            if(!board) return;
-            board.innerHTML = "";
-            for (let r = 0; r < totalMaxAttempts; r++) {
-                const row = document.createElement('div');
-                row.className = 'termoo-row';
+        function buildTermoo() {
+            let html = `<div class="termoo-container">
+                <p style="font-size:18px; color:var(--text-gold); text-align:center;">Adivinhe a palavra de 4 letras para abrir o castelo!</p>
+                <div class="termoo-grid" id="t-grid">`;
+            for (let r = 0; r < 6; r++) {
+                html += `<div class="termoo-row">`;
                 for (let c = 0; c < 4; c++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'termoo-cell';
-                    cell.id = `cell-${r}-${c}`;
-                    row.appendChild(cell);
+                    html += `<div class="termoo-cell" id="t-${r}-${c}"></div>`;
                 }
-                board.appendChild(row);
+                html += `</div>`;
             }
-            attemptsCount = 0;
+            html += `</div><div class="termoo-keyboard">`;
+            const keyboardRows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+            keyboardRows.forEach((row, rowIndex) => {
+                html += `<div class="termoo-kb-row">`;
+                if(rowIndex === 2) html += `<button class="termoo-key" onclick="handleTermooInput('ENTER')">ENT</button>`;
+                for (let char of row) {
+                    html += `<button class="termoo-key" id="tk-${char}" onclick="handleTermooInput('${char}')">${char}</button>`;
+                }
+                if(rowIndex === 2) html += `<button class="termoo-key" onclick="handleTermooInput('BACKSPACE')">⌫</button>`;
+                html += `</div>`;
+            });
+            html += `</div></div>`;
+            return html;
         }
 
-        window.submitTermooWord = function() {
-            if(isTermooCleared) return;
-            const inputField = document.getElementById('termoo-input');
-            const feedbackText = document.getElementById('termoo-feedback');
-            const currentGuess = inputField.value.toUpperCase().trim();
+        function handleTermooInput(key) {
+            if (termooOver) return;
+            play8BitSFX('click');
 
-            if (currentGuess.length !== 4) {
-                feedbackText.innerText = "Insira uma palavra de 4 letras!";
-                return;
+            if (key === 'BACKSPACE') {
+                if (termooCol > 0) {
+                    termooCol--;
+                    document.getElementById(`t-${termooRow}-${termooCol}`).innerText = '';
+                }
+            } else if (key === 'ENTER') {
+                if (termooCol === 4) {
+                    checkTermooRow();
+                }
+            } else if (/^[A-Z]$/.test(key)) {
+                if (termooCol < 4) {
+                    document.getElementById(`t-${termooRow}-${termooCol}`).innerText = key;
+                    termooCol++;
+                }
+            }
+        }
+
+        function checkTermooRow() {
+            let guess = "";
+            for(let c=0; c<4; c++) {
+                guess += document.getElementById(`t-${termooRow}-${c}`).innerText;
+            }
+
+            let tempTarget = targetWord;
+            let states = Array(4).fill('absent');
+
+            for (let i = 0; i < 4; i++) {
+                if (guess[i] === tempTarget[i]) {
+                    states[i] = 'correct';
+                    tempTarget = tempTarget.substring(0, i) + '_' + tempTarget.substring(i + 1);
+                }
             }
 
             for (let i = 0; i < 4; i++) {
-                const cell = document.getElementById(`cell-${attemptsCount}-${i}`);
-                const character = currentGuess[i];
-                cell.innerText = character;
-
-                if (character === secretWord[i]) {
-                    cell.className = 'termoo-cell correct';
-                } else if (secretWord.includes(character)) {
-                    cell.className = 'termoo-cell present';
-                } else {
-                    cell.className = 'termoo-cell absent';
+                if (states[i] !== 'correct') {
+                    let index = tempTarget.indexOf(guess[i]);
+                    if (index !== -1) {
+                        states[i] = 'present';
+                        tempTarget = tempTarget.substring(0, index) + '_' + tempTarget.substring(index + 1);
+                    }
                 }
             }
 
-            if (currentGuess === secretWord) {
+            for (let c = 0; c < 4; c++) {
+                const cell = document.getElementById(`t-${termooRow}-${c}`);
+                const letter = guess[c];
+                const state = states[c];
+                cell.classList.add(state);
+
+                const keyBtn = document.getElementById(`tk-${letter}`);
+                if (keyBtn) {
+                    if (state === 'correct') {
+                        keyBtn.className = "termoo-key key-correct";
+                    } else if (state === 'present' && !keyBtn.classList.contains('key-correct')) {
+                        keyBtn.className = "termoo-key key-present";
+                    } else if (state === 'absent' && !keyBtn.classList.contains('key-correct') && !keyBtn.classList.contains('key-present')) {
+                        keyBtn.className = "termoo-key key-absent";
+                    }
+                }
+            }
+
+            if (guess === targetWord) {
+                termooOver = true;
                 isTermooCleared = true;
                 play8BitSFX('victory');
-                feedbackText.innerText = "PORTÕES ABERTOS! Sucesso Total.";
-                document.getElementById('termoo-controls').style.display = 'none';
-                
                 setTimeout(() => {
-                    displayVictoryEpilogue();
-                }, 1500);
+                    document.getElementById('modal-title').innerHTML = "EPÍLOGO - GAME CLEARED";
+                    document.getElementById('modal-content').innerHTML = epilogueRealContent;
+                }, 1000);
                 return;
             }
 
-            attemptsCount++;
-            inputField.value = "";
-            feedbackText.innerText = `Tentativas restantes: ${totalMaxAttempts - attemptsCount}`;
+            termooRow++;
+            termooCol = 0;
 
-            if (attemptsCount >= totalMaxAttempts) {
-                feedbackText.style.color = "red";
-                feedbackText.innerText = "Feitiço Falhou! Reiniciando matriz...";
-                setTimeout(() => {
-                    initializeTermooGrid();
-                    feedbackText.style.color = "var(--text-gold)";
-                    feedbackText.innerText = "";
-                }, 2000);
+            if (termooRow === 6) {
+                termooOver = true;
+                alert("Game Over! Tente novamente fechando e abrindo o Castelo.");
             }
-        };
-
-        function displayVictoryEpilogue() {
-            document.getElementById('modal-title').innerHTML = "EPÍLOGO - GAME CLEARED";
-            document.getElementById('modal-content').innerHTML = `
-                <div style="display:flex; justify-content:center; margin-bottom: 20px;">
-                    <div class="polaroid-card" style="width: 220px;">
-                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400&auto=format&fit=crop" alt="Foto do Casal">
-                        <p>Eu & Você ❤️</p>
-                    </div>
-                </div>
-                <p style="font-size:18px;">Nenhum jogo seria tão bom se não tivesse você como protagonista.</p>
-                <p style="font-size:18px;">Ver você evoluir, passar de level a cada ano e enfrentar os desafios de cabeça erguida é o meu maior orgulho.</p>
-                <p style="font-size:18px;">Que esse novo nível que você desbloqueia hoje traga missões incríveis e muito loot legendário.</p>
-                <p style="color:var(--text-gold); text-align:center; margin-top:20px;">Serei para sempre a sua Player 2.<br>Feliz Aniversário!</p>
-            `;
         }
 
         /* =========================================
@@ -1033,17 +1052,23 @@
         window.addEventListener('keydown', e => {
             if(titleScreen.style.display !== 'none') return;
             
-            // CORREÇÃO AQUI: Impede que a barra de espaço clique acidentalmente no botão de Mute ou Start focado
             if (e.key === ' ' || e.key === 'Spacebar') {
                 e.preventDefault();
             }
             
+            if (isModalOpen && activePOI && activePOI.id === 'epilogue' && !termooOver) {
+                let k = e.key.toUpperCase();
+                if (k === 'ENTER' || k === 'BACKSPACE' || /^[A-Z]$/.test(k)) {
+                    handleTermooInput(k === 'ENTER' ? 'ENTER' : k === 'BACKSPACE' ? 'BACKSPACE' : k);
+                }
+                return;
+            }
+
             if (e.key === 'w' || e.key === 'ArrowUp') keys.w = true;
             if (e.key === 'a' || e.key === 'ArrowLeft') keys.a = true;
             if (e.key === 's' || e.key === 'ArrowDown') keys.s = true;
             if (e.key === 'd' || e.key === 'ArrowRight') keys.d = true;
             if (e.key === 'e' || e.key === ' ' || e.key === 'Enter') {
-                if(isModalOpen && document.getElementById('termoo-input') === document.activeElement) return;
                 handleAction();
             }
         });
@@ -1145,16 +1170,20 @@
             }
             
             document.getElementById('modal-title').innerHTML = data.title;
-            document.getElementById('modal-content').innerHTML = data.html;
-            modalOverlay.style.display = 'flex';
-
-            if(id === 'epilogue') {
+            
+            if (data.isTermoo) {
                 if(!isTermooCleared) {
-                    initializeTermooGrid();
+                    termooRow = 0; termooCol = 0; termooOver = false;
+                    document.getElementById('modal-content').innerHTML = buildTermoo();
                 } else {
-                    displayVictoryEpilogue();
+                    document.getElementById('modal-title').innerHTML = "EPÍLOGO - GAME CLEARED";
+                    document.getElementById('modal-content').innerHTML = epilogueRealContent;
                 }
+            } else {
+                document.getElementById('modal-content').innerHTML = data.html;
             }
+            
+            modalOverlay.style.display = 'flex';
         }
 
         function closeModal() {
