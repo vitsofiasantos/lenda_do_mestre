@@ -310,6 +310,16 @@
         .stat-bar-bg { flex-grow: 1; height: 18px; background: #333; border: 2px solid white; position: relative; }
         .stat-bar-fill { height: 100%; background: var(--text-green); transition: width 1s; }
 
+        /* Estilos para Novos Minijogos (Memory & Quiz) */
+        .memory-card { transition: transform 0.2s; }
+        .memory-card:hover { transform: scale(1.05); }
+        .quiz-btn {
+            background: #111; border: 3px solid #555; color: white;
+            font-family: var(--font-body); font-size: 20px; padding: 12px; cursor: pointer;
+            text-shadow: 1px 1px 0 #000; transition: 0.2s; margin-bottom: 8px; width: 100%;
+        }
+        .quiz-btn:hover { background: #333; border-color: var(--text-gold); color: var(--text-gold); }
+
         /* =========================================
            CAIXA DE DIÁLOGO POKÉMON
         ========================================= */
@@ -703,7 +713,7 @@
                         <div class="polaroid-card" style="width: 140px;"><img src="https://i.imgur.com/ga2p1CP.png"><p>Estiloso</p></div>
                     </div>
 
-                    <p style="font-size:18px;"><strong>[ PRÓLOGO ]</strong><br>Um menino tímido, mas muito do esperto e criativo nasceu, às margens do Rio mais Doce na terra dos altos coqueiros.</p>
+                    <p style="font-size:18px;"><strong>[ PRÓLOGO ]</strong><br>Um menino tímido, mas muito esperto e criativo nasceu, às margens do Rio mais Doce na terra dos altos coqueiros.</p>
                     <p style="font-size:18px;"><strong>[ O DESPERTAR ]</strong><br>Enfrentou obstáculos e desafiou os seus próprios desconfortos em prol daquilo que acredita: viver é sobre ser a sua melhor versão.</p>
                     <p style="font-size:18px;"><strong>[ STATUS ATUAL ]</strong><br>Tornou-se uma pessoa incrível, dona de um coração lindo e de uma inteligência ímpar. Esse é o início de uma jornada repleta de orgulho por todos os levels upados até aqui...</p>
                 `
@@ -727,23 +737,9 @@
                 `
             },
             friends: {
-                title: "GALERIA DOS ALIADOS",
-                popup: "A party perfeita para qualquer missão",
-                html: `
-                    <p style="text-align:center; font-size: 18px; color: var(--text-gold); margin-bottom: 15px;">Esses atributos são sentidos todos os dias pelas pessoas que te cercam!</p>
-                    <div class="friends-album">
-                        <div class="polaroid-card"><img src="https://i.imgur.com/O9woL84.png"><p>Amizade forte é aquela que passa por todas as fases. Nem sempre as melhores, mas definitivamente icônicas.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/vDc3hGm.png"><p>Ou àquela em que a troca é tão íntima que te permite ser quem se é, sem julgamentos.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/yMiMyYL.png"><p>Mas amizades também podem ser fortalecidas em outros momentos da vida, sendo valiosas para que se lembre quem você está se tornando.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/ua5z2E7.png"><p>E elas são leves, engraçadas e capazes inclusive de dar origem a certos rituais que permanecerão para sempre em sua memória com muito carinho.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/TmKZOts.png"><p>E que neste novo level essas relações sejam ainda mais fortalecidas.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/OA3oKE4.png"><p>Sendo testemunha da alegria de seus amigos.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/1HuDVtV.png"><p>E tendo sempre com quem contar...</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/6f0wz4n.png"><p>Pois sabe que será celebrado e acolhido.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/nJE3DNI.png"><p>Esse é um recado de todos que te amam. E que venham as próximas missões!</p></div>
-            
-                    </div>
-                `
+                title: "MINIJOGO DOS ALIADOS",
+                popup: "A party perfeita para qualquer missão. Mas antes, um desafio de memória!",
+                isMemory: true
             },
             potions: {
                 title: "INVENTÁRIO MÁGICO",
@@ -754,12 +750,12 @@
                         <div class="item" onclick="toggleDesc(this)">
                             <div style="font-size:28px;">💖</div>
                             <div class="item-title">Poção de Confiança</div>
-                            <div class="item-desc">+100 de confiança. Você já consquistou muito até aqui e merece cada uma de suas vitórias.</div>
+                            <div class="item-desc">+100 de confiança. Você já conquistou muito até aqui e merece cada uma de suas vitórias.</div>
                         </div>
                         <div class="item" onclick="toggleDesc(this)">
                             <div style="font-size:28px;">🛌</div>
                             <div class="item-title">Tenda de Descanso</div>
-                            <div class="item-desc">+100 de descanso. A autocobraça é uma armadilha. Não tem problema não dar o seu 100% sempre.</div>
+                            <div class="item-desc">+100 de descanso. A autocobrança é uma armadilha. Não tem problema não dar o seu 100% sempre.</div>
                         </div>
                         <div class="item" onclick="toggleDesc(this)">
                             <div style="font-size:28px;">⭐</div>
@@ -804,25 +800,41 @@
                 `
             },
             family: {
-                title: "ÁLBUM DE FAMÍLIA",
-                popup: "Aqueles que mais sentem saudades...",
-                html: `
-                    <p style="text-align:center; font-size: 18px; color: var(--text-gold); margin-bottom: 15px;">Para não esquecer o quanto você é admirado!</p>
-                    <div class="friends-album">
-                        <div class="polaroid-card"><img src="https://i.imgur.com/PZpa5jd.png"><p>A pessoa que se inspira em você.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/18NhBuH.png"><p>Aquela que te oferece colo desde o início.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/6nbovCb.png"><p>E também a mulher que construiu a sua base para que você pudesse realizar seus sonhos.</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/WebnSJA.png"><p>Todos sentem o seu amor e torcem por você.</p></div>
-                       
-                    </div>
-                `
+                title: "ENIGMA DA FAMÍLIA",
+                popup: "Aqueles que mais sentem saudades... Mas antes, resolva o enigma!",
+                isQuiz: true
             },
             epilogue: {
-                title: "GAME CLEARED",
+                title: "EPÍLOGO - GAME CLEARED",
                 popup: "O Castelo Final exige uma senha mágica para abrir!",
                 isTermoo: true
             }
         };
+
+        const friendsRealContent = `
+            <p style="text-align:center; font-size: 18px; color: var(--text-gold); margin-bottom: 15px;">Esses atributos são sentidos todos os dias pelas pessoas que te cercam!</p>
+            <div class="friends-album">
+                <div class="polaroid-card"><img src="https://i.imgur.com/O9woL84.png"><p>Amizade forte é aquela que passa por todas as fases. Nem sempre as melhores, mas definitivamente icônicas.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/vDc3hGm.png"><p>Ou aquela em que a troca é tão íntima que te permite ser quem se é, sem julgamentos.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/yMiMyYL.png"><p>Mas amizades também podem ser fortalecidas em outros momentos da vida, sendo valiosas para que se lembre quem você está se tornando.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/ua5z2E7.png"><p>E elas são leves, engraçadas e capazes inclusive de dar origem a certos rituais que permanecerão para sempre em sua memória com muito carinho.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/TmKZOts.png"><p>E que neste novo level essas relações sejam ainda mais fortalecidas.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/OA3oKE4.png"><p>Sendo testemunha da alegria de seus amigos.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/1HuDVtV.png"><p>E tendo sempre com quem contar...</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/6f0wz4n.png"><p>Pois sabe que será celebrado e acolhido.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/nJE3DNI.png"><p>Esse é um recado de todos que te amam. E que venham as próximas missões!</p></div>
+            </div>
+        `;
+
+        const familyRealContent = `
+            <p style="text-align:center; font-size: 18px; color: var(--text-gold); margin-bottom: 15px;">Para não esquecer o quanto você é admirado!</p>
+            <div class="friends-album">
+                <div class="polaroid-card"><img src="https://i.imgur.com/PZpa5jd.png"><p>A pessoa que se inspira em você.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/18NhBuH.png"><p>Aquela que te oferece colo desde o início.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/6nbovCb.png"><p>E também a mulher que construiu a sua base para que você pudesse realizar seus sonhos.</p></div>
+                <div class="polaroid-card"><img src="https://i.imgur.com/WebnSJA.png"><p>Todos sentem o seu amor e torcem por você.</p></div>
+            </div>
+        `;
 
         const epilogueRealContent = `
             <div style="display:flex; justify-content:center; margin-bottom: 20px;">
@@ -831,10 +843,111 @@
                     <p>Eu & Você ❤️</p>
                 </div>
             </div>
-            <p style="font-size:18px;">Amo poder compartilhar esse jogo com você!</p>
-            <p style="font-size:18px;">Ver você evoluir, pessoalmente e profisisonalmente, me fazem te admirar e te amar todos os dias.</p>
+            <p style="font-size:18px;">Amo poder compartilhar o jogo da vida com você!</p>
+            <p style="font-size:18px;">Ver você evoluir, pessoalmente e profissionalmente, me fazem te admirar todos os dias.</p>
             <p style="font-size:18px;">Que esse novo nível que você desbloqueia hoje te traga missões incríveis.</p>
             <p style="color:var(--text-gold); text-align:center; margin-top:20px;">Serei a sua Player 2.<br>Feliz aniversário, meu bem!</p>`;
+
+        /* =========================================
+           MINIJOGO 1: MEMÓRIA (ALIADOS)
+        ========================================= */
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let isMemoryCleared = false;
+        let lockBoard = false;
+
+        function initMemoryGame() {
+            memoryCards = ['⚔️','⚔️','🛡️','🛡️','🔮','🔮','💎','💎'];
+            memoryCards.sort(() => 0.5 - Math.random());
+            flippedCards = [];
+            matchedPairs = 0;
+            lockBoard = false;
+        }
+
+        function buildMemory() {
+            let html = `
+            <div class="termoo-container">
+                <p style="font-size:18px; color:var(--text-gold); text-align:center;">Encontre os pares para reunir sua party!</p>
+                <div style="display:grid; grid-template-columns:repeat(4, 60px); gap:10px; justify-content:center; margin-top:20px;">`;
+            for(let i = 0; i < 8; i++) {
+                html += `<div class="memory-card" id="mem-${i}" onclick="flipCard(${i})" style="width:60px; height:60px; background:#333; border:3px solid #555; display:flex; justify-content:center; align-items:center; font-size:30px; cursor:pointer;"></div>`;
+            }
+            html += `</div></div>`;
+            return html;
+        }
+
+        window.flipCard = function(i) {
+            if(lockBoard || isMemoryCleared) return;
+            const card = document.getElementById(`mem-${i}`);
+            if(card.innerText !== '') return; 
+
+            play8BitSFX('click');
+            card.innerText = memoryCards[i];
+            card.style.background = "var(--text-main)";
+            card.style.borderColor = "var(--text-gold)";
+            flippedCards.push({idx: i, el: card});
+
+            if(flippedCards.length === 2) {
+                lockBoard = true;
+                if(memoryCards[flippedCards[0].idx] === memoryCards[flippedCards[1].idx]) {
+                    matchedPairs++;
+                    flippedCards = [];
+                    lockBoard = false;
+                    if(matchedPairs === 4) {
+                        isMemoryCleared = true;
+                        play8BitSFX('victory');
+                        setTimeout(() => {
+                            document.getElementById('modal-title').innerHTML = "GALERIA DOS ALIADOS";
+                            document.getElementById('modal-content').innerHTML = friendsRealContent;
+                        }, 1000);
+                    }
+                } else {
+                    setTimeout(() => {
+                        flippedCards[0].el.innerText = '';
+                        flippedCards[0].el.style.background = '#333';
+                        flippedCards[0].el.style.borderColor = '#555';
+                        flippedCards[1].el.innerText = '';
+                        flippedCards[1].el.style.background = '#333';
+                        flippedCards[1].el.style.borderColor = '#555';
+                        flippedCards = [];
+                        lockBoard = false;
+                    }, 800);
+                }
+            }
+        };
+
+        /* =========================================
+           MINIJOGO 2: QUIZ / ENIGMA (FAMÍLIA)
+        ========================================= */
+        let isQuizCleared = false;
+        
+        function buildQuiz() {
+            return `
+            <div class="termoo-container">
+                <p style="font-size:18px; color:var(--text-gold); text-align:center;">Para desbloquear o álbum de família, responda o Enigma do Sábio:</p>
+                <p style="font-size:20px; text-align:center; margin: 15px 0;">"O que é que cresce quanto mais se divide, e é a verdadeira força de um herói?"</p>
+                <div style="display:flex; flex-direction:column; width:100%; max-width:350px;">
+                    <button class="quiz-btn" onclick="checkQuiz(false)">O Ouro do Reino</button>
+                    <button class="quiz-btn" onclick="checkQuiz(true)">O Amor</button>
+                    <button class="quiz-btn" onclick="checkQuiz(false)">A Magia Arcana</button>
+                    <button class="quiz-btn" onclick="checkQuiz(false)">A Espada de Aço</button>
+                </div>
+            </div>`;
+        }
+
+        window.checkQuiz = function(isCorrect) {
+            if(isCorrect) {
+                isQuizCleared = true;
+                play8BitSFX('victory');
+                document.getElementById('modal-title').innerHTML = "ÁLBUM DE FAMÍLIA";
+                document.getElementById('modal-content').innerHTML = familyRealContent;
+            } else {
+                play8BitSFX('click');
+                alert("O Sábio balança a cabeça: Resposta incorreta! Tente novamente.");
+            }
+        };
+
 
         /* =========================================
            SISTEMA LOGICIAL DO MINIJOGO TERMOO (PALAVRA: VIDA)
@@ -1178,6 +1291,21 @@
                 } else {
                     document.getElementById('modal-title').innerHTML = "GAME CLEARED";
                     document.getElementById('modal-content').innerHTML = epilogueRealContent;
+                }
+            } else if (data.isMemory) {
+                if (!isMemoryCleared) {
+                    initMemoryGame();
+                    document.getElementById('modal-content').innerHTML = buildMemory();
+                } else {
+                    document.getElementById('modal-title').innerHTML = "GALERIA DOS ALIADOS";
+                    document.getElementById('modal-content').innerHTML = friendsRealContent;
+                }
+            } else if (data.isQuiz) {
+                if (!isQuizCleared) {
+                    document.getElementById('modal-content').innerHTML = buildQuiz();
+                } else {
+                    document.getElementById('modal-title').innerHTML = "ÁLBUM DE FAMÍLIA";
+                    document.getElementById('modal-content').innerHTML = familyRealContent;
                 }
             } else {
                 document.getElementById('modal-content').innerHTML = data.html;
